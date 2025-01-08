@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two-Pot System Tax Calculator</title>
+    <!-- Link to your stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <h1>Two-Pot System Tax Calculator</h1>
+
+    <form id="tax-form">
+        <label for="income">Monthly salary before deductions (R):</label>
+        <input type="number" id="income" name="income" step="0.01" required><br><br>
+
+        <label for="deductions">Monthly Tax-Deductible Contributions (R):</label>
+        <input type="number" id="deductions" name="deductions" step="0.01" required><br><br>
+
+        <label for="withdrawal">Withdrawal amount (R):</label>
+        <input type="number" id="withdrawal" name="withdrawal" step="0.01" required><br><br>
+
+        <label for="tax-year">Tax Year:</label>
+        <input type="number" id="tax-year" name="tax-year" value="2024" required><br><br>
+
+        <button type="submit">Calculate Tax</button>
+    </form>
+
+    <div id="result">
+        <!-- Result will be displayed here -->
+    </div>
+
+    <div id="notes">
+        <!-- Notes will be displayed here -->
+    </div>
+
+    <script>
+        const form = document.getElementById('tax-form');
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const income = parseFloat(document.getElementById('income').value);
+            const deductions = parseFloat(document.getElementById('deductions').value);
+            const withdrawal = parseFloat(document.getElementById('withdrawal').value);
+            const taxYear = document.getElementById('tax-year').value;
+
+            // Check if the withdrawal amount is within the allowed range
+            if (withdrawal < 2000 || withdrawal > 30000) {
+                alert('Withdrawal amount must be between R2000 and R30000.');
+                return;  // Stop the form from submitting if the value is out of range
+            }
+
+            // Fetch the calculated tax from the server
+            const response = await fetch('/calculate-tax', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ income, deductions, withdrawal, taxYear }),
+            });
+
+            const result = await response.json();
+            const tax = result.tax;
+
+            // Calculate the withdrawal amount after tax
+            const withdrawalAfterTax = withdrawal - tax;
+
+            // Display the result
+            document.getElementById('result').innerHTML = `
+                <p>Estimated withdrawal amount after tax:</p>
+                <p>R ${withdrawal.toFixed(2)} - R ${tax.toFixed(2)}* = R ${withdrawalAfterTax.toFixed(2)}</p>
+            `;
+
+            // Display the notes in the text box
+            document.getElementById('notes').innerHTML = `
+                * Estimated amount to be paid to SARS based on the current tax rate.
+            `;
+        });
+    </script>
+
+</body>
+</html>
