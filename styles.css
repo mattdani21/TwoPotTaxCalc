@@ -1,7 +1,9 @@
 /* Import Lato font from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap');body {
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap');
+
+body {
     font-family: 'Lato', sans-serif;
-}/* styles.css */
+}
 
 /* Style the notes text box */
 #notes {
@@ -10,30 +12,26 @@
     background-color: #f9f9f9;
 }
 
-}
 /* Apply Lato font to the entire page */
 body {
     font-family: 'Lato', sans-serif;
-}/* styles.css */
+}
 
-/* ... your existing CSS ... */
-
-#result p:last-of-type { /* Target the last paragraph in the result div */
-    font-size: 1.5em; /* 4 times the default font size */
+/* Style the result text */
+#result p:last-of-type {
+    font-size: 1.5em;
     color: #0026A5;
     font-weight: bold;
 }
-
-/* Additional styling can be added here */
 
 /* Center the form on the page */
 form {
     max-width: 600px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #f9f9f9; /* Light background */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Style the labels and inputs */
@@ -67,7 +65,7 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #0056b3;
 }
 
 /* Style the results */
@@ -75,7 +73,7 @@ button:hover {
     text-align: center;
     font-size: 1.5em;
     margin-top: 20px;
-    color: #007bff; /* Green for the result */
+    color: #007bff;
 }
 
 /* Style the note */
@@ -85,13 +83,13 @@ button:hover {
     text-align: center;
     margin-top: 10px;
 }
+
 h1 {
-  font-family: 'lato', sans-serif;
-  font-size: 3em;
-  font-weight: bold;
-  color: #0026A5; /* Blue color */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-  text-align: center;
-  margin-bottom: 20px;
-    
+    font-family: 'Lato', sans-serif;
+    font-size: 3em;
+    font-weight: bold;
+    color: #0026A5;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    margin-bottom: 20px;
 }

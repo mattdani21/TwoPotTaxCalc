@@ -39,36 +39,41 @@ function getTaxRate(taxableIncome) {
 
 // Endpoint to handle tax calculation
 app.post('/calculate-tax', (req, res) => {
-    const monthlySalary = parseFloat(req.body.income) || 0;
-    const monthlyDeductions = parseFloat(req.body.deductions) || 0;
-    const withdrawal = parseFloat(req.body.withdrawal) || 0;
-    const taxYear = req.body.taxYear || "N/A";  // Ensure tax year is correctly captured
+    try {
+        const monthlySalary = parseFloat(req.body.income) || 0;
+        const monthlyDeductions = parseFloat(req.body.deductions) || 0;
+        const withdrawal = parseFloat(req.body.withdrawal) || 0;
+        const taxYear = req.body.taxYear || "N/A";  // Ensure tax year is correctly captured
 
-    // Calculate annual salary and deductions
-    const annualSalary = monthlySalary * 12;
-    const annualDeductions = monthlyDeductions * 12;
+        // Calculate annual salary and deductions
+        const annualSalary = monthlySalary * 12;
+        const annualDeductions = monthlyDeductions * 12;
 
-    // Calculate taxable income (Annual Salary - Annual Deductions)
-    const taxableIncome = annualSalary - annualDeductions;
+        // Calculate taxable income (Annual Salary - Annual Deductions)
+        const taxableIncome = annualSalary - annualDeductions;
 
-    // Add the withdrawal amount to the taxable income to determine the tax rate
-    const totalTaxableIncome = taxableIncome + withdrawal;
+        // Add the withdrawal amount to the taxable income to determine the tax rate
+        const totalTaxableIncome = taxableIncome + withdrawal;
 
-    console.log(`Annual Salary: ${annualSalary}`);
-    console.log(`Annual Deductions: ${annualDeductions}`);
-    console.log(`Taxable Income (without withdrawal): ${taxableIncome}`);
-    console.log(`Total Taxable Income (with withdrawal): ${totalTaxableIncome}`);
+        console.log(`Annual Salary: ${annualSalary}`);
+        console.log(`Annual Deductions: ${annualDeductions}`);
+        console.log(`Taxable Income (without withdrawal): ${taxableIncome}`);
+        console.log(`Total Taxable Income (with withdrawal): ${totalTaxableIncome}`);
 
-    // Get the correct tax rate based on total taxable income
-    const taxRate = getTaxRate(totalTaxableIncome);
+        // Get the correct tax rate based on total taxable income
+        const taxRate = getTaxRate(totalTaxableIncome);
 
-    // Apply the correct tax rate to the withdrawal amount (tax applies only to withdrawal)
-    const tax = withdrawal * taxRate;
-    console.log(`Withdrawal Amount: ${withdrawal}`);
-    console.log(`Tax on Withdrawal: ${tax}`);
-    console.log(`Tax Year: ${taxYear}`);
+        // Apply the correct tax rate to the withdrawal amount (tax applies only to withdrawal)
+        const tax = withdrawal * taxRate;
+        console.log(`Withdrawal Amount: ${withdrawal}`);
+        console.log(`Tax on Withdrawal: ${tax}`);
+        console.log(`Tax Year: ${taxYear}`);
 
-    res.json({ tax });
+        res.json({ tax });
+    } catch (error) {
+        console.error('Error calculating tax:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 });
 
 // Start the server

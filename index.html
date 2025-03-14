@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Two-Pot System Tax Calculator</title>
-    <!-- Link to your stylesheet -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -45,13 +44,11 @@
             const withdrawal = parseFloat(document.getElementById('withdrawal').value);
             const taxYear = document.getElementById('tax-year').value;
 
-            // Check if the withdrawal amount is within the allowed range
             if (withdrawal < 2000 || withdrawal > 30000) {
                 alert('Withdrawal amount must be between R2000 and R30000.');
-                return;  // Stop the form from submitting if the value is out of range
+                return;
             }
 
-            // Fetch the calculated tax from the server
             const response = await fetch('/calculate-tax', {
                 method: 'POST',
                 headers: {
@@ -63,16 +60,13 @@
             const result = await response.json();
             const tax = result.tax;
 
-            // Calculate the withdrawal amount after tax
             const withdrawalAfterTax = withdrawal - tax;
 
-            // Display the result
             document.getElementById('result').innerHTML = `
                 <p>Estimated withdrawal amount after tax:</p>
                 <p>R ${withdrawal.toFixed(2)} - R ${tax.toFixed(2)}* = R ${withdrawalAfterTax.toFixed(2)}</p>
             `;
 
-            // Display the notes in the text box
             document.getElementById('notes').innerHTML = `
                 * Estimated amount to be paid to SARS based on the current tax rate.
             `;
